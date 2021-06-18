@@ -9,7 +9,7 @@ let router = express.Router();
 // Create GET to return a list of all pies
 // request, response and then next for middleware handiling
 router.get('/', (req, res, next) => {
-    res.send("Apple");
+    res.send("Cherry Pie");
 });
 
 // Configure router so all the routes are prefixed with /api/v1 e.g http:localhost:5000/api/
