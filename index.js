@@ -42,7 +42,7 @@ router.get('/search', (req, res, next) => {
     }, (err) => {
         next(err);
     });
-})
+});
 
 
 // /:id represents the argument that is being passed into the endpoint. The number at the end is the id. e.g http://localhost:5000/api/1
@@ -66,18 +66,18 @@ router.get('/:id', (req, res, next) => {
                 "error": {
                     "code" : "NOT_FOUND",
                     "message" : `The pie ${req.params.id} could not be found.`
-                }
-            });  
-        }
+                    }
+             });  
+            }
         }, (err) => {
             next(err);
         });
     });
 
 // Configure router so all the routes are prefixed with /api/v1 e.g http:localhost:5000/api/
-app.use('/api', router);
+app.use('/api/', router);
 
 // Create server to listen on port 5000
 const server = app.listen(5000, () => {
-    console.log('Node server is running on http:localhost:5000..')
+    console.log('Node server is running on http://localhost:5000..')
 });
