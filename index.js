@@ -23,6 +23,28 @@ router.get('/', (req, res, next) => {
     });
 });
 
+// Create GET/searc?id=n&name=str to search for pies by 'id and / or 'name'
+// this will look like http://localhost:5000/api/search?id=1&name=a
+router.get('/search', (req, res, next) => {
+    let searchObject = {
+        "id": req.query.id,
+        "name": req.query.name
+    };
+
+    // pass in searchObject, if we get data back the responce status is 200 and json data is passed in
+    pieRepo.search(searchObject, (data) => {
+        res.status(200).json({
+            "status": 200,
+            "statusTest": "OK",
+            "message": "All pies retrieved.",
+            "data": data
+        });
+    }, (err) => {
+        next(err);
+    });
+})
+
+
 // /:id represents the argument that is being passed into the endpoint. The number at the end is the id. e.g http://localhost:5000/api/1
 router.get('/:id', (req, res, next) => {
     pieRepo.getById(req.params.id, (data) => {
