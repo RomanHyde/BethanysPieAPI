@@ -100,6 +100,32 @@ let pieRepo = {
                     }
                 }
             });
+        },
+
+        delete: (id, resolve, reject) => {
+            fs.readFile(FILE_NAME, (err, data) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    // pies array
+                    let pies = JSON.parse(data);
+                    // id check
+                    let index = pies.findIndex(p => p.id == id);
+                    if (index != -1) {
+                        // splice at the index and remove one item
+                        pies.splice(index, 1);
+                        fs.writeFile(FILE_NAME, JSON.stringify(pies),(err) => {
+                            if (err) {
+                                reject(err);
+                            }
+                            else { 
+                                resolve(index);
+                            }
+                        });
+                    }
+                }
+            });
         }
 
     };

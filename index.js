@@ -121,7 +121,35 @@ router.post('/', (req, res, next) => {
         });
       })
       
-
+// Configure router for deletion, based on which id the user wants to remove
+router.delete('/:id', (req, res, next) => {
+    pieRepo.getById(req.params.id, (data) => {
+        if (data) {
+            // Attempt to delete data
+            pieRepo.delete(req.params.id, (data) => {
+                res.status(200).json({
+                    "status": 200,
+                    "statusText": "OK",
+                    "message": `The pie ${req.params.id} was deleted`,
+                    "data": `Pie ${req.params.id} deleted.`
+                  });
+            });
+        }
+        else {
+            res.status(404).send({
+                "status": 404,
+                "statusText": "Not Found",
+                "message": `The pie ${req.params.id} could not be found.`,
+                "error": {
+                  "code": "NOT_FOUND",
+                  "message": `The pie ${req.params.id} could not be found.`
+                }
+              });
+        }
+    }, (err) => {
+        next(err);
+    });
+})
 
 
 // Configure router so all the routes are prefixed with /api/v1 e.g http:localhost:5000/api/
