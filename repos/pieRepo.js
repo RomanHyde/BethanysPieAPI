@@ -43,8 +43,8 @@ let pieRepo = {
                     // };
                     pies = pies.filter(
                     // if id and / or name match set true
-                    p => (searchObject.id ? p.id == searchObject.id : true) &&
-                    (searchObject.name ? p.name.toLowerCase().indexOf(searchObject.name) >= 0 : true));
+                    p => (searchObject.id ? p.id == searchObject.id: true) &&
+                    (searchObject.name ? p.name.toLowerCase().indexOf(searchObject.name.toLowerCase()) >= 0 : true));
               }
             resolve(pies);
                  }
