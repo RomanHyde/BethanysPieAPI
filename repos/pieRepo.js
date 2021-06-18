@@ -49,7 +49,31 @@ let pieRepo = {
             resolve(pies);
                  }
             });
+        },
+        // Pass in newData
+        insert: (newData, resolve, reject) => {
+            // read json file
+            fs.readFile(FILE_NAME, (err, data) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    // Parse the JSON file data, push newData to JSON file
+                    let pies = JSON.parse(data);
+                    pies.push(newData);
+                    // convert data via JSON stringify method
+                    fs.writeFile(FILE_NAME, JSON.stringify(pies), (err) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(newData);
+                        }
+                    });
+                }
+            });
         }
+
     };
 
 module.exports = pieRepo;
