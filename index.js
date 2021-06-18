@@ -27,8 +27,8 @@ router.get('/', (req, res, next) => {
 // this will look like http://localhost:5000/api/search?id=1&name=a
 router.get('/search', (req, res, next) => {
     let searchObject = {
-        "id": req.query.id,
-        "name": req.query.name
+      "id": req.query.id,
+      "name": req.query.name
     };
 
     // pass in searchObject, if we get data back the responce status is 200 and json data is passed in
@@ -36,7 +36,7 @@ router.get('/search', (req, res, next) => {
         res.status(200).json({
             "status": 200,
             "statusTest": "OK",
-            "message": "All pies retrieved.",
+            "message": "All pies retrieved!",
             "data": data
         });
     }, (err) => {

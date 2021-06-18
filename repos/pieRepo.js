@@ -4,7 +4,7 @@ const FILE_NAME = './assets/pies.json';
 
 let pieRepo = {
     get: (resolve, reject) => {
-        fs.readFile(FILE_NAME, function (err, data) {
+        fs.readFile(FILE_NAME, (err, data) => {
             if (err) {
                 reject(err);
             }
