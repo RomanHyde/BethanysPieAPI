@@ -91,6 +91,37 @@ router.post('/', (req, res, next) => {
     });
 });
 
+// configure put router for updating data
+    router.put('/:id', (req, res, next) => {
+        pieRepo.getById(req.params.id, (data) => {
+          if (data) {
+            // Attempt to update the data
+            pieRepo.update(req.body, req.params.id, (data) => {
+              res.status(200).json({
+                "status": 200,
+                "statusText": "OK",
+                "message": `The pie ${req.params.id} was updated.`,
+                "data": data
+              });
+            });
+          }
+          else {
+            res.status(404).send({
+              "status": 404,
+              "statusText": "Not Found",
+              "message": `The pie ${req.params.id} could not be found.`,
+              "error": {
+                "code": "NOT_FOUND",
+                "message": `The pie ${req.params.id} could not be found.`
+              }
+            });
+          }
+        }, (err) => {
+          next(err);
+        });
+      })
+      
+
 
 
 // Configure router so all the routes are prefixed with /api/v1 e.g http:localhost:5000/api/

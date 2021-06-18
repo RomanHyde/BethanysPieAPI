@@ -72,6 +72,34 @@ let pieRepo = {
                     });
                 }
             });
+        },
+        // update function
+        update: (newData, id, resolve, reject) => {
+            // read file
+            fs.readFile(FILE_NAME, (err, data) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    // parse JSON data
+                    let pies = JSON.parse(data);
+                    // id check
+                    let pie = pies.find( p=> p.id == id);
+                    if (pie) {
+                        // data from old pie data and new data
+                        Object.assign(pie, newData);
+                        // overwrite file
+                        fs.writeFile(FILE_NAME, JSON.stringify(pies), (err) => {
+                            if (err) {
+                                reject(err);
+                            }
+                            else {
+                                resolve(newData);
+                            }
+                        });
+                    }
+                }
+            });
         }
 
     };
