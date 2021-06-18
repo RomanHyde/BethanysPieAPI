@@ -79,5 +79,5 @@ app.use('/api/', router);
 
 // Create server to listen on port 5000
 const server = app.listen(5000, () => {
-    console.log('Node server is running on http://localhost:5000..')
+    console.log('Node server is running on http://localhost:5000..');
 });
