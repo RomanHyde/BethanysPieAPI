@@ -23,6 +23,35 @@ router.get('/', (req, res, next) => {
     });
 });
 
+// /:id represents the argument that is being passed into the endpoint. The number at the end is the id. e.g http://localhost:5000/api/1
+router.get('/:id', (req, res, next) => {
+    pieRepo.getById(req.params.id, (data) => {
+        if (data) {
+            res.status(200).json({
+                "status" : 200,
+                "statusText" : "OK",
+                "message" : "Single pie retrived.",
+                "data" : data
+            });
+        }
+        else {
+            res.status(404).json({
+                // error object
+                "status" : 404,
+                "statusText" : "Not Found",
+                "message" : `The pie ${req.params.id} could not be found.`,
+                // error property added
+                "error": {
+                    "code" : "NOT_FOUND",
+                    "message" : `The pie ${req.params.id} could not be found.`
+                }
+            });  
+        }
+        }, (err) => {
+            next(err);
+        });
+    });
+
 // Configure router so all the routes are prefixed with /api/v1 e.g http:localhost:5000/api/
 app.use('/api', router);
 
