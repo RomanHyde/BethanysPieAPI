@@ -151,6 +151,24 @@ router.delete('/:id', (req, res, next) => {
     });
 })
 
+// patch router for testing, edit data partials
+router.patch('/:id', (req, res, next) => {
+    // find id
+    pieRepo.getById(req.params.id, (data) => {
+        if (data) {
+            // Attempt to update data
+            pieRepo.update(req.body, req.params.id, (data) => {
+                res.status(200).json({
+                    "status": 200,
+                    "statusText": "OK",
+                    "message": `Pie ${req.params.id} was patched.`,
+                    "data": data
+                });
+            });
+        }
+    })
+})
+
 
 // Configure router so all the routes are prefixed with /api/v1 e.g http:localhost:5000/api/
 app.use('/api/', router);
