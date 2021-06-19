@@ -1,10 +1,10 @@
 // Bring in the express server and create application
 // The require() function resolves libraries and modules in the Node search path (ususally \node_modules)
 let express = require('express');
-let app = express();
 let pieRepo = require('./repos/pieRepo')
 let errorHelper = require('./helpers/errorHelpers');
 let cors = require('cors');
+let app = express();
 
 // Use the express Router object
 let router = express.Router();
@@ -190,6 +190,7 @@ app.use(errorHelper.clientErrorHandler);
 app.use(errorHelper.errorHandler);
 
 // Create server to listen on port 5000
-const server = app.listen(5000, () => {
+const server = app.listen(process.env.PORT ||5000, () => {
     console.log('Node server is running on http://localhost:5000..');
+    console.log('CORS is enabled')
 });
