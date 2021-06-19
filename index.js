@@ -14,7 +14,11 @@ app.use(express.json());
 
 // Configure CORS 
 // cors documentation: https://expressjs.com/en/resources/middleware/cors.html
-app.use(cors());
+const corsOptions = {
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "optionsSuccessStatus": 204
+  };
+  app.use(cors(corsOptions));
 
 // Create GET to return a list of all pies
 // request, response and then next for middleware handiling
@@ -190,7 +194,7 @@ app.use(errorHelper.clientErrorHandler);
 app.use(errorHelper.errorHandler);
 
 // Create server to listen on port 5000
-const server = app.listen(process.env.PORT ||5000, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Node server is running on http://localhost:5000..');
     console.log('CORS is enabled')
 });
