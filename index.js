@@ -22,6 +22,7 @@ router.get('/', (req, res, next) => {
             "data": data
         });
     }, (err) => {
+        // middleware callback
         next(err);
     });
 });
@@ -172,6 +173,20 @@ router.patch('/:id', (req, res, next) => {
 
 // Configure router so all the routes are prefixed with /api/v1 e.g http:localhost:5000/api/
 app.use('/api/', router);
+
+// Configure exception middleware last (4 params, first param == error object passed in from from line 26)
+app.use((err, req, res, next) => {
+    res.status(500).json({
+        "status": 500,
+        "statusText": "Internal Server Error",
+        "message": err.message,
+        "error": {
+            "code": "INTERNAL_SERVER_ERROR",
+            "message": err.message
+        }
+    });
+});
+
 
 // Create server to listen on port 5000
 const server = app.listen(5000, () => {
