@@ -14,11 +14,15 @@ app.use(express.json());
 
 // Configure CORS 
 // cors documentation: https://expressjs.com/en/resources/middleware/cors.html
-const corsOptions = {
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "optionsSuccessStatus": 204
-  };
-  app.use(cors(corsOptions));
+  app.use(cors());
+
+//   test
+    // app.use((req, res, next) => {
+    //     res.header('Access-Cintrol-Allow-Origin', "*");
+    //     res.header('Access-Control-Allow-Methods', 'GET, PUT, PATCH, POST, DELETE');
+    //     res.header('Access-Cintrol-Allow-Headers', 'Content-type');
+    //     next();
+    // })
 
 // Create GET to return a list of all pies
 // request, response and then next for middleware handiling
