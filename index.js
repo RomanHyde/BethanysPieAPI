@@ -4,12 +4,17 @@ let express = require('express');
 let app = express();
 let pieRepo = require('./repos/pieRepo')
 let errorHelper = require('./helpers/errorHelpers');
+let cors = require('cors');
 
 // Use the express Router object
 let router = express.Router();
 
 // Configure middleware to support JSON data parsin in request object (it only parses JSON)
 app.use(express.json());
+
+// Configure CORS 
+// cors documentation: https://expressjs.com/en/resources/middleware/cors.html
+app.use(cors());
 
 // Create GET to return a list of all pies
 // request, response and then next for middleware handiling
