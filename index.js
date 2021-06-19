@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
             "data": data
         });
     }, (err) => {
-        // middleware callback
+        // middleware callback (call next middleware function)
         next(err);
     });
 });
@@ -174,17 +174,30 @@ router.patch('/:id', (req, res, next) => {
 // Configure router so all the routes are prefixed with /api/v1 e.g http:localhost:5000/api/
 app.use('/api/', router);
 
-// Configure exception middleware last (4 params, first param == error object passed in from from line 26)
-app.use((err, req, res, next) => {
-    res.status(500).json({
+// Configure errorBuilder
+const errorBuilder = (err) => {
+    return {
         "status": 500,
         "statusText": "Internal Server Error",
         "message": err.message,
         "error": {
+            "errno": err.errno,
+            "call": err.syscall,
             "code": "INTERNAL_SERVER_ERROR",
             "message": err.message
         }
-    });
+    };
+}
+
+// Configure exception logger
+app.use((err, req, res, next) => {
+    console.log(errorBuilder(err));
+    next(err);
+});
+
+// Configure exception middleware last (4 params, first param == error object passed in from from line 26)
+app.use((err, req, res, next) => {
+    res.status(500).json(errorBuilder(err));
 });
 
 
