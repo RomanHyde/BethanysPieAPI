@@ -1,3 +1,6 @@
+// bring in logRepo
+let logRepo = require('../repos/logRepo');
+
 let errorHelpers = {
     logErrorsToConsole: (err, req, res, next) => {
         // send error ingo to console.error
@@ -6,7 +9,22 @@ let errorHelpers = {
         // forward err to next middleware
         next(err)
     },
-    clientErrorHandler: (err, req, res, next) => {
+    logErrorsToFile: (err, req, res, next) => {
+        let errorObject = errorHelpers.errorBuilder(err);
+        // add on new property called requestInfo & adding more info to log file
+        errorObject.requestInfo = {
+            "hostname": req.hostname,
+            "path": req.path,
+            "app": req.app,
+        }
+        // pass err object into write
+        logRepo.write(errorObject, (data) => {
+            console.log(data);
+        }, (err) => {
+            next(err);
+        });
+    },
+     clientErrorHandler: (err, req, res, next) => {
         // Check request object for error
         if (req.xhr) {
             res.status(500).json({
